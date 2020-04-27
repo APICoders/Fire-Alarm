@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 
 import com.ds.FireAlarmMonitor.controller.FireAlarmDao;
 import com.ds.FireAlarmMonitor.controller.MailController;
-import com.ds.FireAlarmMonitor.controller.SmsSender;
+import com.ds.FireAlarmMonitor.controller.SmsController;
 import com.ds.FireAlarmMonitor.controller.UserDao;
 import com.ds.FireAlarmMonitor.model.FireAlarm;
 import com.ds.FireAlarmMonitor.model.User;
@@ -123,7 +123,7 @@ public class FireAlarmMonitoringService {
 	@Path("/sendSMS")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendSMS(FireAlarm fireAlarm) {
-		SmsSender sms = new SmsSender();
+		SmsController sms = new SmsController();
 		try {
 			sms.sendSMS(fireAlarm);
 			System.out.println("sms sent sucessfully");

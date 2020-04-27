@@ -7,7 +7,7 @@ import com.twilio.type.PhoneNumber;
 
 
 
-public class SmsSender {
+public class SmsController {
  // Find your Account Sid and Auth Token at twilio.com/console
  public static final String ACCOUNT_SID =
          "ACae7f0f69b34d4c8724d932ff15b746d7";
