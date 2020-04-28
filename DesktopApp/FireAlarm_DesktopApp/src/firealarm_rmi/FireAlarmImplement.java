@@ -9,7 +9,11 @@ package firealarm_rmi;
  *
  * @author Pasan
  */
+import firealarm_ui.Alert;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -22,123 +26,32 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarmInterface{
-
+    
+        //Intialize Variable
+        StringBuffer response = new StringBuffer();
+        Timer refreshTimer;
+        
     public FireAlarmImplement() throws RemoteException{
         
+        getStatus();
+        //Set Refresh
+         refreshTimer =new Timer(15000, new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                  getStatus();
+              }
+          });
+          refreshTimer.start();
     }
-    
-    
-    public boolean getLogin(String user, String pass) throws RemoteException 
-    {
-         
-        boolean found=false;
-        try 
-        {
-            if(user.equals("admin") && pass.equals("123")||user.equals("admin1") && pass.equals("1234")||user.equals("admin2") && pass.equals("12345") )
-            {
-          // Carteira cart1 = new Carteira();
-            //    System.out.println("Seu saldo é de:"+cart1.getCarteira());
-   // MenuCantina menucan = new MenuCantina();
-         //   menucan.menu();
-             
-                
-                
-                
-                  JOptionPane.showMessageDialog(null, "Login com sucesso");
-         
-                
-                
-           // menucan.menu();
-            
-          
-            
-               return found=true;
-                
-            }
-            else
-            {
-                return found=false;
-            }
-        } 
-        
-        catch (Exception ex) 
-        {
-            ex.printStackTrace();
-        }
-       
-        return found;
-        
-        
-    }
-
-
-    public void showAll() throws RemoteException {
-        
-        
-      
-            
-        try {
-            String url = "http://localhost:8080/FireAlarmMonitor/rest/fireAlarms/";
-            URL obj;
-            
-            obj = new URL(url);
-            
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            // optional default is GET
-            con.setRequestMethod("GET");
-            //add request header
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            
-        
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-
-               response.append(inputLine);
-
-            }
-            in.close();
- 
-            System.out.println(response.toString());
-       
-            JSONArray my = new JSONArray(response.toString());
-            
-            for (int i = 0; i < my.length(); ++i) {
-    JSONObject rec = my.getJSONObject(i);
-    int id = rec.getInt("co2Level");
-  //  String loc = rec.getString("loc");
-    // ...
-    
-                System.out.println(id);
-}
-            
-   
      
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ProtocolException ex) {
-            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
-       
-   }    catch (JSONException ex) {    
-            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
-        }    
-     
-      
-        
     
-    }
+
 
     @Override
     public boolean AdminLogin(String email, String password) throws RemoteException {
@@ -146,13 +59,14 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         boolean found= false;
                  
         try {
-            String url = "http://localhost:8080/FireAlarmMonitor/rest/fireAlarms/getUser/"+email+"/"+password+"/";
+            //Call api url
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/getUser/"+email+"/"+password+"/";
             URL obj;
             
             obj = new URL(url);
             
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            // optional default is GET
+            //Method GET
             con.setRequestMethod("GET");
             //add request header
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -169,17 +83,16 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
 
             }
               JSONObject jobj = new JSONObject(response.toString());
-     
-             
-              
-               String uemail = jobj.getString("email");
-               String upass = jobj.getString("password");
+
+               
                int uvalid = jobj.getInt("valid");
                
                if(uvalid == 1){
+                   //Found User
                    return found = true;
                }
                else
+                   //Cant find
                    return found = false;
    
      
@@ -195,28 +108,404 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         }    
      
       
-        return found;
+        return found;//Return the result
      
     }
 
     @Override
     public boolean AdminRegister(String name, String email, String password) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          boolean reg_user = false;
+        try {
+            //URL call in the API
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addUser/";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the POST request
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+            jObject.put("name",name);
+            jObject.put("email",email);
+            jObject.put("password",password);
+            
+            //converting the JSON object
+            String data = jObject.toString();
+            
+            System.out.println(data);
+            
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            System.out.println("Added successfully");
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'POST' request to URL : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            reg_user = true;//Return the result
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return reg_user;
     }
 
     @Override
-    public boolean RegisterSensor(String roomNo, String flooNo) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean RegisterAlarm(String roomNo, String flooNo) throws RemoteException {
+          
+        boolean reg_alarm = false;
+        try {
+            //URL call in the API
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addAlarm/";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the POST request
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+            jObject.put("roomNo",roomNo);
+            jObject.put("floorNo",flooNo);
+            
+            //converting the JSON object
+            String data = jObject.toString();
+            
+            System.out.println(data);
+            
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            System.out.println("Added successfully");
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'POST' request to URL : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            reg_alarm = true;//Return the result
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return reg_alarm;
     }
 
     @Override
-    public boolean UpdateFireAlarm(int roomNo, int floorNo, int id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean UpdateFireAlarm(String roomNo, String floorNo, int id) throws RemoteException {
+        boolean reg_alarm = false;
+        try {
+            //URL  call in the API
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateFireAlarm/"+id;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the put request
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+            jObject.put("roomNo",roomNo);
+            jObject.put("floorNo",floorNo);
+            
+            //converting the JSON object
+            String data = jObject.toString();
+            
+            System.out.println(data);
+            
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            System.out.println("Update successfully");
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'PUT' request to URL : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            reg_alarm = true;//Return the result
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return reg_alarm;
     }
 
     @Override
     public boolean DeleteFireAlarm(int id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          boolean delete_alarm = false;
+      try {
+            //URL for the Delete function call in the API
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/deleteFireAlarm/"+id;
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the DELETE request
+            con.setRequestMethod("DELETE");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+        
+            
+            //converting the JSON object
+            String data = jObject.toString();
+    
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            System.out.println("Delete successfully");
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'PUT' request to URL : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            delete_alarm = true;
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }  catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return delete_alarm;
+    }
+   
+     
+    @Override
+    public StringBuffer showfirealarm() throws RemoteException {
+        
+ 
+      return response;//Retrn the result
+        
+    }
+
+    @Override
+    public void getStatus() {
+        
+         try {
+            //URL for the Delete function call in the API
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/";
+            URL urlobj;
+             System.out.println("\n request to URL [GET] : " + url);
+            
+            urlobj = new URL(url);
+            
+            HttpURLConnection connection = (HttpURLConnection) urlobj.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            int responseCode = connection.getResponseCode();
+           
+          
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            
+        
+            String inputLine;
+            
+            while ((inputLine = in.readLine()) != null) {
+
+               response.append(inputLine);
+
+            }
+            in.close();
+ 
+         
+            //Responce add to JSON array
+                    JSONArray firealarm = new JSONArray(response.toString());
+                        
+                    //Devide the JSON object to json array
+                     for (int i = 0; i < firealarm.length(); ++i) {
+                            JSONObject fireobj = firealarm.getJSONObject(i);
+                            int id = fireobj.getInt("id");
+                            String floor = fireobj.getString("floorNo");
+                            String room = fireobj.getString("roomNo");
+                            int co2 = fireobj.getInt("co2Level");
+                            int smoke = fireobj.getInt("smokeLevel");
+                            int status = fireobj.getInt("status");
+                         
+                            //If co2 or smoke level increse the 5 Display the alert
+                           if(co2 > 5 || smoke > 5){
+                               //Start the alert
+                              sendMail(id,floor,room,co2,smoke);
+                              sendSms(id, floor, room, co2, smoke);
+                           }
+                        
+
+                
+            }
+   
+     
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+       
+        }   catch (JSONException ex) {
+                Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+     
+    }
+    
+    private void sendMail(int id,String floor,String room,int co2,int smoke){
+        
+         try {
+            //URL call in the API to send mail
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendMail/";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the POST request
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+            jObject.put("id",id);
+            jObject.put("floorNo",floor);
+            jObject.put("roomNo",room);
+            jObject.put("co2Level",co2);
+             jObject.put("smokeLevel",smoke);
+            
+            //converting the JSON object
+            String data = jObject.toString();
+            
+            System.out.println(data);
+            
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'POST' request to email : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    
+    private void sendSms(int id,String floor,String room,int co2,int smoke){
+        
+         try {
+            //URL call in the API to send mail
+            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendSMS/";
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            
+            //Creating the POST request
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            con.setRequestProperty("Content-Type","application/json");
+            
+            //creating a JSON object using json-simple library
+            JSONObject jObject = new JSONObject();
+            jObject.put("id",id);
+            jObject.put("floorNo",floor);
+            jObject.put("roomNo",room);
+            jObject.put("co2Level",co2);
+             jObject.put("smokeLevel",smoke);
+            
+            //converting the JSON object
+            String data = jObject.toString();
+            
+            System.out.println(data);
+            
+            //Insert data to output stream
+            con.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            stream.writeBytes(data);
+            stream.flush();
+            stream.close();
+            
+            int responseCode = con.getResponseCode();
+            System.out.println("Sending 'POST' request to sms : " + url);
+            System.out.println("Data sending : " + data);
+            System.out.println("Response Code : " + responseCode);
+            
+            
+
+            
+         
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProtocolException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }

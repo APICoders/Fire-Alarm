@@ -8,17 +8,18 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Hp/Desktop/final touch/javax.mail.jar">
+	<classpathentry kind="lib" path="D:/SLIIT/3rd year/DS/DS Content/FireAlarmMonitor/javax.mail.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Hp/Desktop/final touch/mysql-connector-java-5.1.38-bin.jar">
+	<classpathentry kind="lib" path="D:/SLIIT/3rd year/DS/DS Content/FireAlarmMonitor/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/SLIIT/3rd year/DS/DS Content/FireAlarmMonitor/mysql-connector-java-5.1.38-bin.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Hp/Desktop/final touch/twilio-7.9.1-jar-with-dependencies.jar">
+	<classpathentry kind="lib" path="D:/SLIIT/3rd year/DS/assiment 2/Fire-Alarm-master/twilio-7.9.1-jar-with-dependencies.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

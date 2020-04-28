@@ -6,6 +6,17 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JOptionPane;
 import firealarm_rmi.FireAlarmInterface;
+import java.awt.Button;
+import java.awt.Dimension;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,13 +30,60 @@ import firealarm_rmi.FireAlarmInterface;
  */
 public class Admin extends javax.swing.JFrame {
 
+      //Define the table and timer
+     DefaultTableModel table;
+     Timer refreshTimer;
     /**
      * Creates new form Admin
      */
     public Admin() {
+        //Form Load Event
         initComponents();
+        centerPanel();
+        createCloums();
+        autoRefresh();
     }
+    
+    private void centerPanel() {
 
+            //JFrom Center the compter screen
+            Dimension windowSize = getSize();//Get the form size
+            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Point centerPoint = graphicsEnvironment.getCenterPoint();
+
+            int x = centerPoint.x - windowSize.width / 2;//From Horisontal center
+            int y = centerPoint.y - windowSize.height / 2;//From vertical center    
+            setLocation(x, y);//Set the From center in the computer screen
+    }
+      
+      
+    private void autoRefresh(){
+        //Timer Auto refresh the 15 secounds
+          refreshTimer =new Timer(15000, new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                  //What event run given time
+                  Refresh();
+              }
+          });
+          refreshTimer.start();//Start timer
+          
+      }
+
+    private void createCloums(){
+        
+        //In form load that columns are create
+        table = (DefaultTableModel) tbladmin.getModel();
+        table.addColumn("ID");
+        table.addColumn("Floor No");
+        table.addColumn("Room No");
+        table.addColumn("CO2");
+        table.addColumn("Smoke");
+        table.addColumn("Status");
+        
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,45 +93,398 @@ public class Admin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        button1 = new java.awt.Button();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbladmin = new javax.swing.JTable();
+        btnAdd = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtFloor = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtRoom = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        lblid = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        button1.setLabel("button1");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+        setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbladmin.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tbladmin.setRowSelectionAllowed(false);
+        tbladmin.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                tbladminMouseDragged(evt);
+            }
+        });
+        tbladmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbladminMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbladmin);
+
+        btnAdd.setText("Add Alarm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Floor Number");
+
+        txtFloor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("Room Number");
+
+        txtRoom.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        btnDelete.setText("Delete Alarm");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update Alarm");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(102, 204, 255));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel3.setText("FIRE ALARM SYSTEM");
+        jLabel3.setAlignmentY(0.6F);
+
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(435, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(282, 282, 282)
+                .addComponent(btnLogout)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLogout)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(40, 40, 40)
+                .addComponent(txtFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(226, 226, 226))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblid))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(241, 241, 241)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(190, 190, 190)
+                .addComponent(btnUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDelete)
+                .addGap(241, 241, 241))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblid)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnAdd)
+                    .addComponent(btnDelete))
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(447, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1187, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(399, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-      
-    }//GEN-LAST:event_button1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    
+            
+          boolean registerUser=false;
+        try
+        {
+            //Register the RMI
+            Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
+            FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
+           
+            registerUser=firealarm.RegisterAlarm(txtFloor.getText(),txtRoom.getText());
+            
+            if(registerUser==true)
+            {   
+                //User Create Sccuess
+                JOptionPane.showMessageDialog(null, "Alarm Register Succuess.");
+                Refresh();
 
-    /**
-     * @param args the command line arguments
-     */
+              
+            }
+            else {
+                //User Create Fail
+                JOptionPane.showMessageDialog(null, "Alarm Register Fail.");
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+                //Form open Methods
+                Refresh();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void tbladminMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbladminMouseDragged
+        // TODO add your handling code here:
+     
+         
+    }//GEN-LAST:event_tbladminMouseDragged
+
+    private void tbladminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbladminMouseClicked
+        // TODO add your handling code here:
+        
+        tbladmin.setCellSelectionEnabled(false);
+      //Cell click, go that values to text boxes
+          int r = tbladmin.getSelectedRow();//Get selected ro
+         
+        String id = table.getValueAt(r, 0).toString();//Get id
+        String floor = table.getValueAt(r, 1).toString();//Get floor
+        String room = table.getValueAt(r, 2).toString();//Get room  
+      
+   
+        //Set vales to text boxes
+        txtFloor.setText(floor);
+        txtRoom.setText(room);
+        lblid.setText(id);
+    }//GEN-LAST:event_tbladminMouseClicked
+  
+ private void Refresh(){
+        
+          table =(DefaultTableModel) tbladmin.getModel();
+            int rowCount = table.getRowCount();//Get row count
+            //Remove rows one by one from table
+            for (int i = rowCount - 1; i >= 0; i--) {
+                table.removeRow(i);
+        }
+
+        JSONArray firealarm = new JSONArray();
+        StringBuffer response = new StringBuffer();
+        try 
+        {
+            //Rgister the RMI 
+            Registry reg=LocateRegistry.getRegistry("127.0.0.1",1098);
+            FireAlarmInterface fireAlarm=(FireAlarmInterface)reg.lookup("firealarm");
+            //Get responce of the server
+            response =  fireAlarm.showfirealarm();
+            
+            //Responce add to JSON array
+             firealarm = new JSONArray(response.toString());
+                        
+                    //Devide the JSON object to json array
+                     for (int i = 0; i < firealarm.length(); ++i) {
+                            JSONObject fireobj = firealarm.getJSONObject(i);
+                            int id = fireobj.getInt("id");
+                            String floor = fireobj.getString("floorNo");
+                            String room = fireobj.getString("roomNo");
+                            int co2 = fireobj.getInt("co2Level");
+                            int smoke = fireobj.getInt("smokeLevel");
+                            int status = fireobj.getInt("status");
+                            
+                            //Adding to Table that values
+                            InsertRow(id,floor,room,Integer.toString(co2),Integer.toString(smoke), status);
+                            
+                            //If co2 or smoke level increse the 5 Display the alert
+                           if(co2 > 5 || smoke > 5){
+                               //Start the alert
+                               Alert frmAlert = new Alert(floor,room);
+                               frmAlert.show();
+                           }
+                        
+
+                
+            }
+            
+            
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+       
+       //Show update conform alert 
+         int x = JOptionPane.showConfirmDialog(null, "Do you want this update");
+         
+            boolean updateAlarm=false;
+            
+              if(x == 0){
+
+             try
+        {
+            //Regsiter RMI
+            Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
+            FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
+           
+            int id =Integer.parseInt(lblid.getText());
+            updateAlarm=firealarm.UpdateFireAlarm(txtRoom.getText(),txtFloor.getText(),id);
+            
+            if(updateAlarm==true)
+            {
+                //Click OK
+                JOptionPane.showMessageDialog(null, "Alarm Update Succuess.");
+                Refresh();
+
+              
+            }
+            else {
+                //Click Cancel
+                JOptionPane.showMessageDialog(null, "Alarm Update Fail.");
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        }
+      
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        
+            boolean deleteAlarm=false;
+        try
+        {
+            Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
+            FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
+           
+            int id =Integer.parseInt(lblid.getText());
+            //Get responce
+            deleteAlarm=firealarm.DeleteFireAlarm(id);
+            
+            if(deleteAlarm==true)
+            {
+                //Cick Ok
+                JOptionPane.showMessageDialog(null, "Alarm Delete Succuess.");
+                Refresh();
+
+              
+            }
+            else {
+                //Click Cancel
+                JOptionPane.showMessageDialog(null, "Alarm Delete Fail.");
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        Guest frmGuest = new Guest();
+        frmGuest.show();
+        this.hide();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void InsertRow(int id,String floor,String room,String co2,String smoke,int status){
+        
+        //Responce data add to table
+        table =(DefaultTableModel) tbladmin.getModel();
+        String sid = String.valueOf(id);
+        
+        String[] rowData ={ sid,room,floor,co2,smoke,String.valueOf(status)};
+        
+        //Adding
+        table.addRow(rowData);
+    }
+     
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -107,6 +518,19 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JTable tbladmin;
+    private javax.swing.JTextField txtFloor;
+    private javax.swing.JTextField txtRoom;
     // End of variables declaration//GEN-END:variables
 }

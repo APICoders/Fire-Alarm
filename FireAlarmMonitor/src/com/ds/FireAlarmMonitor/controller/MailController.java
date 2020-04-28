@@ -22,7 +22,7 @@ public class MailController {
 		String senderPassword = "dilmigodakanda";
 		String recipientAddress = "sandaminidhu@gmail.com";
 		String subject = "Alert on fireAlarm "+f.getId();
-		String emailBody = "The fire alarm "+f.getId()+" at room "+f.getRoomNo();
+		String emailBody = "The fire alarm "+f.getId()+" at Floor "+ f.getFloorNo()+" room "+f.getRoomNo()+"  CO2  Level - "+f.getCo2Level()+"  Smoke Level - "+f.getSmokeLevel();
 		
 		
 		

@@ -18,7 +18,8 @@ public class UserDao {
 	 * 
 	 */
 	public User checkValidity(String email,String password) {
-		String sql = "Select * from user where email="+email +" and password="+password;
+		System.out.println(email);
+		String sql = "Select * from user where email='"+email +"'AND password='"+password+"'";
 		User user = new User();
 		
 		try {
@@ -34,7 +35,7 @@ public class UserDao {
 			 */
 			
 			if(rs.next()) {
-				
+				System.out.println("user found");
 				user.setEmail(rs.getString(1));
 				user.setName(rs.getString(2));
 				user.setPassword(rs.getString(3));

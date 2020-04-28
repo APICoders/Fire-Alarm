@@ -3,6 +3,9 @@ package firealarm_ui;
 
 import firealarm_ui.Admin;
 import firealarm_rmi.FireAlarmInterface;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import javax.swing.JOptionPane;
@@ -24,6 +27,7 @@ public class AdminRegister extends javax.swing.JFrame {
      */
     public AdminRegister() {
         initComponents();
+        centerPanel();
     }
 
     /**
@@ -41,14 +45,16 @@ public class AdminRegister extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnCancel = new java.awt.Button();
-        jLabel3 = new javax.swing.JLabel();
         txtConPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnReg = new java.awt.Button();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -70,9 +76,6 @@ public class AdminRegister extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("Admin Register");
-
         txtConPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -92,6 +95,28 @@ public class AdminRegister extends javax.swing.JFrame {
                 btnRegActionPerformed(evt);
             }
         });
+
+        jPanel2.setBackground(new java.awt.Color(102, 204, 255));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText("Admin Register");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(213, 213, 213))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,17 +151,13 @@ public class AdminRegister extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(95, 95, 95))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel3)
-                .addGap(63, 63, 63)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -152,7 +173,7 @@ public class AdminRegister extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(txtConPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -167,46 +188,66 @@ public class AdminRegister extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+      private void centerPanel() {
+
+            Dimension windowSize = getSize();
+            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            Point centerPoint = graphicsEnvironment.getCenterPoint();
+
+            int x = centerPoint.x - windowSize.width / 2;
+            int y = centerPoint.y - windowSize.height / 2;    
+            setLocation(x, y);
+    }
+      
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
-       
+            Guest frmguest = new Guest();
+            frmguest.show();
+            this.hide();
 
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
         // TODO add your handling code here:
         
-         boolean f=false;
+        String pass = txtPassword.getText();
+        String conpass = txtConPassword.getText();
+        if(pass.equals(conpass)){
+               boolean registerUser=false;
         try
         {
-            Registry reg=LocateRegistry.getRegistry("127.0.0.1",1098);
-            FireAlarmInterface i=(FireAlarmInterface)reg.lookup("login");
-            i.showAll();
-            f=i.AdminLogin(txtName.getText(),txtEmail.getText());
-            if(f==true)
+            Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
+            FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
+           
+            registerUser=firealarm.AdminRegister(txtName.getText(),txtEmail.getText(),txtPassword.getText());
+            
+            if(registerUser==true)
             {
-                JOptionPane.showMessageDialog(null, "Login com Sucess");
-
-                Admin frmAdmin = new Admin();
-                frmAdmin.show();
-                //                MenuCantina menucan = new MenuCantina();
-                //            menucan.menu();
+                JOptionPane.showMessageDialog(null, "User Register Succuess.");
+                        Guest frmguest = new Guest();
+                        frmguest.show();
+                        this.hide();
+              
             }
             else {
-                JOptionPane.showMessageDialog(null, "Login Fail");
+                JOptionPane.showMessageDialog(null, "User Register Fail.");
             }
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
+        
+        }else
+            JOptionPane.showMessageDialog(null, "Password Does Not Match");
+        
+      
     }//GEN-LAST:event_btnRegActionPerformed
 
     /**
@@ -253,6 +294,7 @@ public class AdminRegister extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtConPassword;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
