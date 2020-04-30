@@ -162,20 +162,20 @@ public class AdminLogin extends javax.swing.JFrame {
 
     
       private void centerPanel() {
-
+            //Center Panel
             Dimension windowSize = getSize();
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Point centerPoint = graphicsEnvironment.getCenterPoint();
 
             int x = centerPoint.x - windowSize.width / 2;
             int y = centerPoint.y - windowSize.height / 2;    
-            setLocation(x, y);
+            setLocation(x, y);//Set Location
     }
       
       
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-                // TODO add your handling code here:
+             
         boolean f=false;
         try 
         {
@@ -184,14 +184,16 @@ public class AdminLogin extends javax.swing.JFrame {
             f=i.AdminLogin(txtEmail.getText(),txtPassword.getText());
             if(f==true)
             {
-                JOptionPane.showMessageDialog(null, "Login com Sucess");
-                
+                //Login Success
+                JOptionPane.showMessageDialog(null, "Login Success");
+                //Open Admin Form
                 Admin frmAdmin = new Admin();
                 frmAdmin.show();
-//                MenuCantina menucan = new MenuCantina();
-//            menucan.menu();   
+                dispose();
+  
             }
             else {
+                //Login Fail
                 JOptionPane.showMessageDialog(null, "Login Fail");
             }
         }
@@ -203,7 +205,9 @@ public class AdminLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        // TODO add your handling code here:
+        
+        
+        //Open Guest Form
         Guest frmGuest = new Guest();
         frmGuest.show();
         this.hide();

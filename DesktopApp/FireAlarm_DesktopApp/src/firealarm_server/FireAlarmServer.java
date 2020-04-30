@@ -21,10 +21,8 @@ public class FireAlarmServer {
      try 
      {
            Registry register=LocateRegistry.createRegistry(1098);
-        
-           
+                  
            FireAlarmImplement fireAlarmImplement=new FireAlarmImplement();
-       
        
            register.rebind("firealarm", fireAlarmImplement);
            System.out.println("FireAlarm Server Start.");
