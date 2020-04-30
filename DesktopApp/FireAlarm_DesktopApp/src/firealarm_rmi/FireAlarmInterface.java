@@ -16,13 +16,13 @@ public interface FireAlarmInterface extends Remote{
     
     public boolean AdminRegister(String name,String email,String password) throws RemoteException;
     
-    public boolean RegisterAlarm(String roomNo,String flooNo) throws RemoteException;
+    public boolean RegisterAlarm(String floorNo,String roomNo) throws RemoteException;
     
-    public boolean UpdateFireAlarm(String roomNo,String floorNo,int id) throws RemoteException;
+    public boolean UpdateFireAlarm(String floorNo,String roomNo,int id) throws RemoteException;
     
     public boolean DeleteFireAlarm(int id) throws RemoteException;
     
     public StringBuffer showfirealarm() throws RemoteException;  
     
-    public void getStatus() throws RemoteException;
+    
 }

@@ -74,10 +74,10 @@ public class Guest extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
-        tblGuest.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tblGuest.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tblGuest.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {}
+
             },
             new String [] {
 
@@ -221,8 +221,8 @@ public class Guest extends javax.swing.JFrame {
           
       }
      
-    private void Refresh(){
-        
+ private void Refresh(){
+         
           table =(DefaultTableModel) tblGuest.getModel();
             int rowCount = table.getRowCount();//Get row count
             //Remove rows one by one from table
@@ -237,7 +237,7 @@ public class Guest extends javax.swing.JFrame {
             //Rgister the RMI 
             Registry reg=LocateRegistry.getRegistry("127.0.0.1",1098);
             FireAlarmInterface fireAlarm=(FireAlarmInterface)reg.lookup("firealarm");
-            //Get responce of the server
+            //Get responce from the server
             response =  fireAlarm.showfirealarm();
             
             //Responce add to JSON array
@@ -254,7 +254,7 @@ public class Guest extends javax.swing.JFrame {
                             int status = fireobj.getInt("status");
                             
                             //Adding to Table that values
-                            InsertRow(id,floor,room,Integer.toString(co2),Integer.toString(smoke), status);
+                            InsertRow(id,floor,room,co2,smoke, status);
                             
                             //If co2 or smoke level increse the 5 Display the alert
                            if(co2 > 5 || smoke > 5){
@@ -276,15 +276,22 @@ public class Guest extends javax.swing.JFrame {
         
     }
         
-    private void InsertRow(int id,String floor,String room,String co2,String smoke,int status){
+     private void InsertRow(int id,String floor,String room,int co2,int smoke,int status){
         
         //Responce data add to table
         table =(DefaultTableModel) tblGuest.getModel();
+         String nStatus="";
         String sid = String.valueOf(id);
+        if(status == 1){
+             nStatus = "Active";
+        }else if(status == 0){
+             nStatus = "Inactive";
+        }
+       
+        //Create
+        String[] rowData ={ sid,floor,room,String.valueOf(co2),String.valueOf(smoke),nStatus};
         
-        String[] rowData ={ sid,room,floor,co2,smoke,String.valueOf(status)};
-        
-        //Adding
+        //Adding rows
         table.addRow(rowData);
     }
     
@@ -299,7 +306,7 @@ public class Guest extends javax.swing.JFrame {
         //If register button click open the register form
         AdminRegister frmreg = new AdminRegister();
         frmreg.show();
-        this.hide();
+        dispose();
     }//GEN-LAST:event_btnAdminRegisterActionPerformed
 
     private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
@@ -307,7 +314,7 @@ public class Guest extends javax.swing.JFrame {
         //If the login button click open the login form
         AdminLogin frmLogin = new AdminLogin();
         frmLogin.show();
-        this.hide();
+        dispose();
     }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
