@@ -196,17 +196,18 @@ public class AdminRegister extends javax.swing.JFrame {
 
       private void centerPanel() {
 
-            Dimension windowSize = getSize();
+            Dimension windowSize = getSize();//Get window size
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Point centerPoint = graphicsEnvironment.getCenterPoint();
 
             int x = centerPoint.x - windowSize.width / 2;
             int y = centerPoint.y - windowSize.height / 2;    
-            setLocation(x, y);
+            setLocation(x, y);//Set loacation
     }
       
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+        
+            //Display the Guest Form
             Guest frmguest = new Guest();
             frmguest.show();
             this.hide();
@@ -222,20 +223,24 @@ public class AdminRegister extends javax.swing.JFrame {
                boolean registerUser=false;
         try
         {
+            //Register RMI
             Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
             FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
            
+            //Pass parameters
             registerUser=firealarm.AdminRegister(txtName.getText(),txtEmail.getText(),txtPassword.getText());
             
             if(registerUser==true)
             {
-                JOptionPane.showMessageDialog(null, "User Register Succuess.");
+                //User register Success
+                JOptionPane.showMessageDialog(null, "User Register Success.");
                         Guest frmguest = new Guest();
                         frmguest.show();
                         this.hide();
               
             }
             else {
+                //User register fail
                 JOptionPane.showMessageDialog(null, "User Register Fail.");
             }
         }

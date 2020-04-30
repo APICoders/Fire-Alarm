@@ -8,6 +8,7 @@ package firealarm_ui;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Toolkit;
 
 /**
  *
@@ -23,19 +24,20 @@ public class Alert extends javax.swing.JFrame {
          
         initComponents();
         centerPanel();
-         lblFloor.setText(floor);
+        lblFloor.setText(floor);
         lblRoom.setText(room);
     }
 
     private void centerPanel() {
-
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             Dimension windowSize = getSize();
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Point centerPoint = graphicsEnvironment.getCenterPoint();
 
-            int x = centerPoint.x - windowSize.width / 2;
-            int y = centerPoint.y - windowSize.height / 2;    
+            int x = (int) (screenSize.width - windowSize.getWidth());
+            int y = (int) (screenSize.height - windowSize.getHeight() - 25);   
             setLocation(x, y);
+          // panel.setLocation(screenSize.width - panel.getWidth(), screenSize.height - panel.getHeight() - 25);
     }
     
     private Alert() {

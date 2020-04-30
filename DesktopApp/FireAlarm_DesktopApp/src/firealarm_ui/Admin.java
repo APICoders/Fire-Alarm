@@ -33,6 +33,7 @@ public class Admin extends javax.swing.JFrame {
       //Define the table and timer
      DefaultTableModel table;
      Timer refreshTimer;
+ 
     /**
      * Creates new form Admin
      */
@@ -42,6 +43,7 @@ public class Admin extends javax.swing.JFrame {
         centerPanel();
         createCloums();
         autoRefresh();
+     
     }
     
     private void centerPanel() {
@@ -107,6 +109,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
+        txtInfo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -118,6 +121,7 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        tbladmin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tbladmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -126,6 +130,8 @@ public class Admin extends javax.swing.JFrame {
 
             }
         ));
+        tbladmin.setRowHeight(40);
+        tbladmin.setRowMargin(5);
         tbladmin.setRowSelectionAllowed(false);
         tbladmin.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -205,20 +211,14 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        txtInfo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtInfo.setForeground(new java.awt.Color(255, 102, 102));
+        txtInfo.setText("Please wait for next refresh.....");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(40, 40, 40)
-                .addComponent(txtFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(226, 226, 226))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -230,13 +230,27 @@ public class Admin extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(241, 241, 241)
+                .addGap(278, 278, 278)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(190, 190, 190)
+                .addGap(153, 153, 153)
                 .addComponent(btnUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDelete)
                 .addGap(241, 241, 241))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(40, 40, 40)
+                .addComponent(txtFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(226, 226, 226))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(txtInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +258,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(lblid)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtFloor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,9 +269,11 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(btnUpdate)
                     .addComponent(btnAdd)
                     .addComponent(btnDelete))
-                .addGap(56, 56, 56)
+                .addGap(27, 27, 27)
+                .addComponent(txtInfo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,24 +293,25 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-    
             
-          boolean registerUser=false;
+        
+            
+          boolean registerAlarm=false;
         try
         {
             //Register the RMI
             Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
             FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
            
-            registerUser=firealarm.RegisterAlarm(txtFloor.getText(),txtRoom.getText());
+            //Passing parameters
+            registerAlarm=firealarm.RegisterAlarm(txtFloor.getText(),txtRoom.getText());
             
-            if(registerUser==true)
+            if(registerAlarm==true)
             {   
-                //User Create Sccuess
-                JOptionPane.showMessageDialog(null, "Alarm Register Succuess.");
-                Refresh();
-
-              
+                //User Create Succuess
+                JOptionPane.showMessageDialog(null, "Alarm Register Success.");
+                txtInfo.setVisible(true);
+                clearText();
             }
             else {
                 //User Create Fail
@@ -309,7 +326,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
+       
                 //Form open Methods
                 Refresh();
     }//GEN-LAST:event_formWindowOpened
@@ -338,8 +355,12 @@ public class Admin extends javax.swing.JFrame {
         lblid.setText(id);
     }//GEN-LAST:event_tbladminMouseClicked
   
+    private void clearText(){
+       txtFloor.setText("");
+       txtRoom.setText("");
+}
  private void Refresh(){
-        
+          
           table =(DefaultTableModel) tbladmin.getModel();
             int rowCount = table.getRowCount();//Get row count
             //Remove rows one by one from table
@@ -348,17 +369,20 @@ public class Admin extends javax.swing.JFrame {
         }
 
         JSONArray firealarm = new JSONArray();
-        StringBuffer response = new StringBuffer();
+        StringBuffer newresponse = new StringBuffer();
         try 
         {
             //Rgister the RMI 
             Registry reg=LocateRegistry.getRegistry("127.0.0.1",1098);
             FireAlarmInterface fireAlarm=(FireAlarmInterface)reg.lookup("firealarm");
-            //Get responce of the server
-            response =  fireAlarm.showfirealarm();
+            //Get responce from the server
+            newresponse =  fireAlarm.showfirealarm();
+           
+            
+            
             
             //Responce add to JSON array
-             firealarm = new JSONArray(response.toString());
+             firealarm = new JSONArray(newresponse.toString());
                         
                     //Devide the JSON object to json array
                      for (int i = 0; i < firealarm.length(); ++i) {
@@ -371,7 +395,7 @@ public class Admin extends javax.swing.JFrame {
                             int status = fireobj.getInt("status");
                             
                             //Adding to Table that values
-                            InsertRow(id,floor,room,Integer.toString(co2),Integer.toString(smoke), status);
+                            InsertRow(id,floor,room,co2,smoke, status);
                             
                             //If co2 or smoke level increse the 5 Display the alert
                            if(co2 > 5 || smoke > 5){
@@ -380,10 +404,10 @@ public class Admin extends javax.swing.JFrame {
                                frmAlert.show();
                            }
                         
-
+                            
                 
             }
-            
+            txtInfo.setVisible(false);
             
         }
         catch (Exception ex)
@@ -395,11 +419,12 @@ public class Admin extends javax.swing.JFrame {
     
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
        
-       //Show update conform alert 
-         int x = JOptionPane.showConfirmDialog(null, "Do you want this update");
+       //Show update confirm alert 
+         int x = JOptionPane.showConfirmDialog(null, "Do you want update");
          
             boolean updateAlarm=false;
             
+            //Click Ok
               if(x == 0){
 
              try
@@ -409,18 +434,19 @@ public class Admin extends javax.swing.JFrame {
             FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
            
             int id =Integer.parseInt(lblid.getText());
-            updateAlarm=firealarm.UpdateFireAlarm(txtRoom.getText(),txtFloor.getText(),id);
+            updateAlarm=firealarm.UpdateFireAlarm(txtFloor.getText(),txtRoom.getText(),id);
             
             if(updateAlarm==true)
             {
-                //Click OK
-                JOptionPane.showMessageDialog(null, "Alarm Update Succuess.");
-                Refresh();
+                //Update Success
+                JOptionPane.showMessageDialog(null, "Alarm Update Success.");
+                txtInfo.setVisible(true);
+                clearText();
 
               
             }
             else {
-                //Click Cancel
+                //Update Fail
                 JOptionPane.showMessageDialog(null, "Alarm Update Fail.");
             }
         }
@@ -439,23 +465,25 @@ public class Admin extends javax.swing.JFrame {
             boolean deleteAlarm=false;
         try
         {
+            //Register RMI 
             Registry register=LocateRegistry.getRegistry("127.0.0.1",1098);
             FireAlarmInterface firealarm=(FireAlarmInterface)register.lookup("firealarm");
            
             int id =Integer.parseInt(lblid.getText());
-            //Get responce
+            //Get responce from the RMI
             deleteAlarm=firealarm.DeleteFireAlarm(id);
             
             if(deleteAlarm==true)
             {
-                //Cick Ok
-                JOptionPane.showMessageDialog(null, "Alarm Delete Succuess.");
-                Refresh();
+                //Update Success
+                JOptionPane.showMessageDialog(null, "Alarm Delete Success.");
+                txtInfo.setVisible(true);
+                clearText();
 
               
             }
             else {
-                //Click Cancel
+                //Update Fail
                 JOptionPane.showMessageDialog(null, "Alarm Delete Fail.");
             }
         }
@@ -469,18 +497,26 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
         Guest frmGuest = new Guest();
         frmGuest.show();
-        this.hide();
+       dispose();
+        
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void InsertRow(int id,String floor,String room,String co2,String smoke,int status){
+    private void InsertRow(int id,String floor,String room,int co2,int smoke,int status){
         
         //Responce data add to table
         table =(DefaultTableModel) tbladmin.getModel();
+         String nStatus="";
         String sid = String.valueOf(id);
+        if(status == 1){
+             nStatus = "Active";
+        }else if(status == 0){
+             nStatus = "Inactive";
+        }
+       
+        //Create
+        String[] rowData ={ sid,floor,room,String.valueOf(co2),String.valueOf(smoke),nStatus};
         
-        String[] rowData ={ sid,room,floor,co2,smoke,String.valueOf(status)};
-        
-        //Adding
+        //Adding rows
         table.addRow(rowData);
     }
      
@@ -531,6 +567,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel lblid;
     private javax.swing.JTable tbladmin;
     private javax.swing.JTextField txtFloor;
+    private javax.swing.JLabel txtInfo;
     private javax.swing.JTextField txtRoom;
     // End of variables declaration//GEN-END:variables
 }

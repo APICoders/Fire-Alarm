@@ -34,7 +34,7 @@ import org.json.JSONObject;
 public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarmInterface{
     
         //Intialize Variable
-        StringBuffer response = new StringBuffer();
+        StringBuffer response;
         Timer refreshTimer;
         
     public FireAlarmImplement() throws RemoteException{
@@ -167,8 +167,8 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
     }
 
     @Override
-    public boolean RegisterAlarm(String roomNo, String flooNo) throws RemoteException {
-          
+    public boolean RegisterAlarm(String floorNo, String roomNo) throws RemoteException {
+         
         boolean reg_alarm = false;
         try {
             //URL call in the API
@@ -184,7 +184,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
             //creating a JSON object using json-simple library
             JSONObject jObject = new JSONObject();
             jObject.put("roomNo",roomNo);
-            jObject.put("floorNo",flooNo);
+            jObject.put("floorNo",floorNo);
             
             //converting the JSON object
             String data = jObject.toString();
@@ -221,7 +221,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
     }
 
     @Override
-    public boolean UpdateFireAlarm(String roomNo, String floorNo, int id) throws RemoteException {
+    public boolean UpdateFireAlarm(String floorNo, String roomNo, int id) throws RemoteException {
         boolean reg_alarm = false;
         try {
             //URL  call in the API
@@ -330,14 +330,15 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         
     }
 
-    @Override
+   
     public void getStatus() {
         
+        response = new StringBuffer();
          try {
             //URL for the Delete function call in the API
             String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/";
             URL urlobj;
-             System.out.println("\n request to URL [GET] : " + url);
+             System.out.println("\n request to URL [GET] for REFRESH : " + url);
             
             urlobj = new URL(url);
             
@@ -359,7 +360,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
 
             }
             in.close();
- 
+             System.out.println(response.toString());
          
             //Responce add to JSON array
                     JSONArray firealarm = new JSONArray(response.toString());
