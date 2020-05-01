@@ -198,14 +198,14 @@ public class Guest extends javax.swing.JFrame {
     
     private void centerPanel() {
 
-            //JFrom Center the compter screen
+          //JFrom Center the compter screen
             Dimension windowSize = getSize();//Get the form size
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Point centerPoint = graphicsEnvironment.getCenterPoint();
 
-            int x = centerPoint.x - windowSize.width / 2;//From Horisontal center
-            int y = centerPoint.y - windowSize.height / 2;//From vertical center    
-            setLocation(x, y);//Set the From center in the computer screen
+            int hor = centerPoint.x - windowSize.width / 2;//From Horisontal center
+            int ver = centerPoint.y - windowSize.height / 2;//From vertical center    
+            setLocation(hor, ver);//Set the From center in the computer screen
     }
         
     private void autoRefresh(){

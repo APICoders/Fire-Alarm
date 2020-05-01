@@ -44,14 +44,14 @@ public class Sensor extends javax.swing.JFrame {
 		
         try {
             //URL for the updateFireAlarmRecords function call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateRecords/"+id;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateRecords/"+id;
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpCon = (HttpURLConnection)obj.openConnection();
             
             //Creating the put request
-            con.setRequestMethod("PUT");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpCon.setRequestMethod("PUT");
+            httpCon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpCon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
             JSONObject jObject = new JSONObject();
@@ -66,20 +66,19 @@ public class Sensor extends javax.swing.JFrame {
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpCon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpCon.getOutputStream());
             stream.writeBytes(data);
-            System.out.println("Added successfully");
+            System.out.println("update successfully");
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'PUT' request to URL : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
+            int responseCode = httpCon.getResponseCode();
+            System.out.println("'PUT' request to URL : " + RequestUrl);
+      
             
             BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+                    new InputStreamReader(httpCon.getInputStream()));
             String output;
             StringBuffer response = new StringBuffer();
             
@@ -104,14 +103,14 @@ public class Sensor extends javax.swing.JFrame {
     
     private void sendSensorData(int id,int smokeLevel, int co2Level) throws Exception{
 		//URL for the updateFireAlarmRecords function call in the API
-		String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateRecords/"+id;
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+		String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateRecords/"+id;
+		URL obj = new URL(RequestUrl);
+		HttpURLConnection httpCon = (HttpURLConnection)obj.openConnection();
 		
 		//Creating the put request
-		con.setRequestMethod("PUT");
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("Content-Type","application/json");
+		httpCon.setRequestMethod("PUT");
+		httpCon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		httpCon.setRequestProperty("Content-Type","application/json");
 		
 		//creating a JSON object using json-simple library
 		JSONObject jObject = new JSONObject();
@@ -126,20 +125,19 @@ public class Sensor extends javax.swing.JFrame {
 		System.out.println(data);
 		
 		 //Insert data to output stream
-		con.setDoOutput(true);
-		DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+		httpCon.setDoOutput(true);
+		DataOutputStream stream = new DataOutputStream(httpCon.getOutputStream());
 		stream.writeBytes(data);
-		System.out.println("Added successfully");
+		System.out.println("update successfully");
 		stream.flush();
 		stream.close();
 		
-		int responseCode = con.getResponseCode();
-		  System.out.println("Sending 'PUT' request to URL : " + url);
-		  System.out.println("Data sending : " + data);
-		  System.out.println("Response Code : " + responseCode);
+		int responseCode = httpCon.getResponseCode();
+		  System.out.println("'PUT' request to URL : " + RequestUrl);
+	
 		 
 		  BufferedReader reader = new BufferedReader(
-		          new InputStreamReader(con.getInputStream()));
+		          new InputStreamReader(httpCon.getInputStream()));
 		  String output;
 		  StringBuffer response = new StringBuffer();
 		 

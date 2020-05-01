@@ -61,28 +61,28 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         try {
             //Call api url
             String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/getUser/"+email+"/"+password+"/";
-            URL obj;
+            URL UrlObj;
             
-            obj = new URL(url);
+            UrlObj = new URL(url);
             
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) UrlObj.openConnection();
             //Method GET
-            con.setRequestMethod("GET");
+            connection.setRequestMethod("GET");
             //add request header
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            int responseCode = con.getResponseCode();
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+            int responseCode = connection.getResponseCode();
             BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+                    new InputStreamReader(connection.getInputStream()));
             
         
             String value;
-            StringBuffer response = new StringBuffer();
+            StringBuffer userResponse = new StringBuffer();
             while ((value = bufferedReader.readLine()) != null) {
 
-               response.append(value);
+               userResponse.append(value);
 
             }
-              JSONObject jobj = new JSONObject(response.toString());
+              JSONObject jobj = new JSONObject(userResponse.toString());
 
                
                int uvalid = jobj.getInt("valid");
@@ -117,39 +117,37 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
           boolean reg_user = false;
         try {
             //URL call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addUser/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addUser/";
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)obj.openConnection();
             
             //Creating the POST request
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("POST");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
-            JSONObject jObject = new JSONObject();
-            jObject.put("name",name);
-            jObject.put("email",email);
-            jObject.put("password",password);
+            JSONObject adminObject = new JSONObject();
+            adminObject.put("name",name);
+            adminObject.put("email",email);
+            adminObject.put("password",password);
             
             //converting the JSON object
-            String data = jObject.toString();
+            String data = adminObject.toString();
             
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             System.out.println("Added successfully");
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'POST' request to URL : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
-            
+            int responseCode = httpcon.getResponseCode();
+            System.out.println(" 'POST' request to URL : " + RequestUrl);
+                 
             reg_user = true;//Return the result
 
             
@@ -172,37 +170,36 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         boolean reg_alarm = false;
         try {
             //URL call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addAlarm/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/addAlarm/";
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)obj.openConnection();
             
             //Creating the POST request
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("POST");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
-            JSONObject jObject = new JSONObject();
-            jObject.put("roomNo",roomNo);
-            jObject.put("floorNo",floorNo);
+            JSONObject alarmObject = new JSONObject();
+            alarmObject.put("roomNo",roomNo);
+            alarmObject.put("floorNo",floorNo);
             
             //converting the JSON object
-            String data = jObject.toString();
+            String data = alarmObject.toString();
             
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             System.out.println("Added successfully");
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'POST' request to URL : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
+            int responseCode = httpcon.getResponseCode();
+            System.out.println("'POST' request to URL : " + RequestUrl);
+
             
             reg_alarm = true;//Return the result
 
@@ -225,37 +222,36 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         boolean update_alarm = false;
         try {
             //URL  call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateFireAlarm/"+id;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateFireAlarm/"+id;
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)obj.openConnection();
             
             //Creating the put request
-            con.setRequestMethod("PUT");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("PUT");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
-            JSONObject jObject = new JSONObject();
-            jObject.put("roomNo",roomNo);
-            jObject.put("floorNo",floorNo);
+            JSONObject alarmObject = new JSONObject();
+            alarmObject.put("roomNo",roomNo);
+            alarmObject.put("floorNo",floorNo);
             
             //converting the JSON object
-            String data = jObject.toString();
+            String data = alarmObject.toString();
             
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             System.out.println("Update successfully");
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'PUT' request to URL : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
+            int responseCode = httpcon.getResponseCode();
+            System.out.println("'PUT' request to URL : " + RequestUrl);
+      
             
             update_alarm = true;//Return the result
 
@@ -278,14 +274,14 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
           boolean delete_alarm = false;
       try {
             //URL for the Delete function call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/deleteFireAlarm/"+id;
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/deleteFireAlarm/"+id;
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)obj.openConnection();
             
             //Creating the DELETE request
-            con.setRequestMethod("DELETE");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("DELETE");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
             JSONObject jObject = new JSONObject();
@@ -295,15 +291,15 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
             String data = jObject.toString();
     
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             System.out.println("Delete successfully");
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'DELETE' request to URL : " + url);
+            int responseCode = httpcon.getResponseCode();
+            System.out.println("Sending 'DELETE' request to URL : " + RequestUrl);
             System.out.println("Data sending : " + data);
             System.out.println("Response Code : " + responseCode);
             
@@ -336,11 +332,11 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         response = new StringBuffer();
          try {
             //URL for the function call in the API
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/";
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/";
             URL urlobj;
-             System.out.println("\n request to URL [GET] for REFRESH : " + url);
+             System.out.println("\n request to URL [GET] for REFRESH : " + RequestUrl);
             
-            urlobj = new URL(url);
+            urlobj = new URL(RequestUrl);
             
             HttpURLConnection connection = (HttpURLConnection) urlobj.openConnection();
             connection.setRequestMethod("GET");
@@ -348,18 +344,18 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
             int responseCode = connection.getResponseCode();
            
           
-            BufferedReader in = new BufferedReader(
+            BufferedReader alarmBuffer = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));
             
         
             String inputLine;
             
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = alarmBuffer.readLine()) != null) {
 
                response.append(inputLine);
 
             }
-            in.close();
+            alarmBuffer.close();
              System.out.println(response.toString());
          
             //Responce add to JSON array
@@ -404,39 +400,38 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         
          try {
             //URL call in the API to send mail
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendMail/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendMail/";
+            URL obj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)obj.openConnection();
             
             //Creating the POST request
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("POST");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
-            JSONObject jObject = new JSONObject();
-            jObject.put("id",id);
-            jObject.put("floorNo",floor);
-            jObject.put("roomNo",room);
-            jObject.put("co2Level",co2);
-             jObject.put("smokeLevel",smoke);
+            JSONObject alarmObject = new JSONObject();
+            alarmObject.put("id",id);
+            alarmObject.put("floorNo",floor);
+            alarmObject.put("roomNo",room);
+            alarmObject.put("co2Level",co2);
+             alarmObject.put("smokeLevel",smoke);
             
             //converting the JSON object
-            String data = jObject.toString();
+            String data = alarmObject.toString();
             
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'POST' request to email : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
+            int responseCode = httpcon.getResponseCode();
+            System.out.println("'POST' request to email : " + RequestUrl);
+
             
             
 
@@ -453,45 +448,43 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         }
         
     }
-    
-    
+      
     private void sendSms(int id,String floor,String room,int co2,int smoke){
         
          try {
             //URL call in the API to send mail
-            String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendSMS/";
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            String RequestUrl = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/sendSMS/";
+            URL UrlObj = new URL(RequestUrl);
+            HttpURLConnection httpcon = (HttpURLConnection)UrlObj.openConnection();
             
             //Creating the POST request
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            con.setRequestProperty("Content-Type","application/json");
+            httpcon.setRequestMethod("POST");
+            httpcon.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+            httpcon.setRequestProperty("Content-Type","application/json");
             
             //creating a JSON object using json-simple library
-            JSONObject jObject = new JSONObject();
-            jObject.put("id",id);
-            jObject.put("floorNo",floor);
-            jObject.put("roomNo",room);
-            jObject.put("co2Level",co2);
-             jObject.put("smokeLevel",smoke);
+            JSONObject alarmObject = new JSONObject();
+            alarmObject.put("id",id);
+            alarmObject.put("floorNo",floor);
+            alarmObject.put("roomNo",room);
+            alarmObject.put("co2Level",co2);
+             alarmObject.put("smokeLevel",smoke);
             
             //converting the JSON object
-            String data = jObject.toString();
+            String data = alarmObject.toString();
             
             System.out.println(data);
             
             //Insert data to output stream
-            con.setDoOutput(true);
-            DataOutputStream stream = new DataOutputStream(con.getOutputStream());
+            httpcon.setDoOutput(true);
+            DataOutputStream stream = new DataOutputStream(httpcon.getOutputStream());
             stream.writeBytes(data);
             stream.flush();
             stream.close();
             
-            int responseCode = con.getResponseCode();
-            System.out.println("Sending 'POST' request to sms : " + url);
-            System.out.println("Data sending : " + data);
-            System.out.println("Response Code : " + responseCode);
+            int responseCode = httpcon.getResponseCode();
+            System.out.println("'POST' request to sms : " + RequestUrl);
+
             
             
 

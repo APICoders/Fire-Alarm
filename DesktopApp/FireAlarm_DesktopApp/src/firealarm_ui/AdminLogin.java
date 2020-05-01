@@ -162,14 +162,14 @@ public class AdminLogin extends javax.swing.JFrame {
 
     
       private void centerPanel() {
-            //Center Panel
-            Dimension windowSize = getSize();
+         //JFrom Center the compter screen
+            Dimension windowSize = getSize();//Get the form size
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Point centerPoint = graphicsEnvironment.getCenterPoint();
 
-            int x = centerPoint.x - windowSize.width / 2;
-            int y = centerPoint.y - windowSize.height / 2;    
-            setLocation(x, y);//Set Location
+            int hor = centerPoint.x - windowSize.width / 2;//From Horisontal center
+            int ver = centerPoint.y - windowSize.height / 2;//From vertical center    
+            setLocation(hor, ver);//Set the From center in the computer screen
     }
       
       
