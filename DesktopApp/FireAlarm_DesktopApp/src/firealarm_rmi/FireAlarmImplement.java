@@ -222,7 +222,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
 
     @Override
     public boolean UpdateFireAlarm(String floorNo, String roomNo, int id) throws RemoteException {
-        boolean reg_alarm = false;
+        boolean update_alarm = false;
         try {
             //URL  call in the API
             String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/updateFireAlarm/"+id;
@@ -257,7 +257,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
             System.out.println("Data sending : " + data);
             System.out.println("Response Code : " + responseCode);
             
-            reg_alarm = true;//Return the result
+            update_alarm = true;//Return the result
 
             
          
@@ -270,7 +270,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         } catch (IOException ex) {
             Logger.getLogger(FireAlarmImplement.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return reg_alarm;
+         return update_alarm;
     }
 
     @Override
@@ -303,7 +303,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
             stream.close();
             
             int responseCode = con.getResponseCode();
-            System.out.println("Sending 'PUT' request to URL : " + url);
+            System.out.println("Sending 'DELETE' request to URL : " + url);
             System.out.println("Data sending : " + data);
             System.out.println("Response Code : " + responseCode);
             
@@ -335,7 +335,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
         
         response = new StringBuffer();
          try {
-            //URL for the Delete function call in the API
+            //URL for the function call in the API
             String url = "http://localhost:8081/FireAlarmMonitor/rest/fireAlarms/";
             URL urlobj;
              System.out.println("\n request to URL [GET] for REFRESH : " + url);
@@ -377,7 +377,7 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
                          
                             //If co2 or smoke level increse the 5 Display the alert
                            if(co2 > 5 || smoke > 5){
-                               //Start the alert
+                               //Send sms and mail
                               sendMail(id,floor,room,co2,smoke);
                               sendSms(id, floor, room, co2, smoke);
                            }

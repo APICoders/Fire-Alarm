@@ -177,6 +177,13 @@ public class AdminLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
              
         boolean f=false;
+        
+        if(txtEmail.getText().isEmpty()){//Check Email is empty
+                JOptionPane.showMessageDialog(null, "Please enter the Email");
+        }else if(txtPassword.getText().isEmpty()){//Check password is empty
+                 JOptionPane.showMessageDialog(null, "Please enter the Password");
+        }else{//Details Filled
+        
         try 
         {
             Registry reg=LocateRegistry.getRegistry("127.0.0.1",1098);
@@ -201,7 +208,7 @@ public class AdminLogin extends javax.swing.JFrame {
         {
             ex.printStackTrace();
         }
-        
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed

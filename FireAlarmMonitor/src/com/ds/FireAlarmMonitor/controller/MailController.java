@@ -18,9 +18,9 @@ import com.ds.FireAlarmMonitor.model.FireAlarm;
 public class MailController {
 
 	public  void sendMail(FireAlarm f) throws AddressException,MessagingException{
-		String  sendermail = "nisansala.d9710@gmail.com";
-		String senderPassword = "dilmigodakanda";
-		String recipientAddress = "sandaminidhu@gmail.com";
+		String  sendermail = "apicoders.codeArmy@gmail.com";
+		String senderPassword = "p5@k@a9833";
+		String recipientAddress = "pasanpramuditha97@gmail.com";
 		String subject = "Alert on fireAlarm "+f.getId();
 		String emailBody = "The fire alarm "+f.getId()+" at Floor "+ f.getFloorNo()+" room "+f.getRoomNo()+"  CO2  Level - "+f.getCo2Level()+"  Smoke Level - "+f.getSmokeLevel();
 		

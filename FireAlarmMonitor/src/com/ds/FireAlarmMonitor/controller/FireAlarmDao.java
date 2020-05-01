@@ -18,7 +18,7 @@ public class FireAlarmDao {
 	//Fetching all the data from the firealarm table
 	public  List<FireAlarm> getFireAlarms(){
 		
-		String sql = "select * from firealarm";
+		String sql = "select id,floorNo,roomNo,co2Level,smokeLevel,status from firealarm";
 		ArrayList<FireAlarm>fireAlarmList  = new ArrayList<FireAlarm>();
 		
 		try {
@@ -29,13 +29,14 @@ public class FireAlarmDao {
 			while(rs.next()) {
 				FireAlarm fireAlarm = new FireAlarm();
 				fireAlarm.setId(rs.getInt(1));
-				fireAlarm.setRoomNo(rs.getString(2));
-				fireAlarm.setFloorNo(rs.getString(3));
-				
-				fireAlarm.setStatus(rs.getInt(4));
-				
+				fireAlarm.setFloorNo(rs.getString(2));
+				fireAlarm.setRoomNo(rs.getString(3));
+				fireAlarm.setCo2Level(rs.getInt(4));
 				fireAlarm.setSmokeLevel(rs.getInt(5));
-				fireAlarm.setCo2Level(rs.getInt(6));
+				fireAlarm.setStatus(rs.getInt(6));
+				
+				
+				
 				
 				System.out.println(fireAlarm);
 				fireAlarmList.add(fireAlarm);
@@ -52,7 +53,7 @@ public class FireAlarmDao {
 	 ** THis method is to fetch a specific fire alarm from the db  
 	 */
 	public FireAlarm getAlarm(int id) {
-		String sql = "Select * from firealarm where id="+id;
+		String sql = "Select id,floorNo,roomNo,co2Level,smokeLevel,status from firealarm where id="+id;
 		FireAlarm fireAlarm = new FireAlarm();
 		ArrayList<FireAlarm>fireAlarmList  = new ArrayList<FireAlarm>();
 		
@@ -64,11 +65,13 @@ try {
 			if(rs.next()) {
 				
 				fireAlarm.setId(rs.getInt(1));
-				fireAlarm.setRoomNo(rs.getString(2));
-				fireAlarm.setFloorNo(rs.getString(3));
-				fireAlarm.setStatus(rs.getInt(4));
+				fireAlarm.setFloorNo(rs.getString(2));
+				fireAlarm.setRoomNo(rs.getString(3));
+				fireAlarm.setCo2Level(rs.getInt(4));
 				fireAlarm.setSmokeLevel(rs.getInt(5));
-				fireAlarm.setCo2Level(rs.getInt(6));
+				fireAlarm.setStatus(rs.getInt(6));
+				
+				
 				
 			}
 			con.close();

@@ -79,7 +79,7 @@ public class AdminRegister extends javax.swing.JFrame {
         txtConPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Conform-Password");
+        jLabel4.setText("Confirm-Password");
 
         txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -217,6 +217,16 @@ public class AdminRegister extends javax.swing.JFrame {
     private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
         // TODO add your handling code here:
         
+        if(txtName.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null, "Please enter the Name");
+        }else if(txtEmail.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null, "Please enter the Email");
+        }else if(txtPassword.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null, "Please enter the Password");
+        }else if(txtConPassword.getText().isEmpty()){
+              JOptionPane.showMessageDialog(null, "Please enter the Confirm password");
+        }else{
+        
         String pass = txtPassword.getText();
         String conpass = txtConPassword.getText();
         if(pass.equals(conpass)){
@@ -252,7 +262,7 @@ public class AdminRegister extends javax.swing.JFrame {
         }else
             JOptionPane.showMessageDialog(null, "Password Does Not Match");
         
-      
+        }
     }//GEN-LAST:event_btnRegActionPerformed
 
     /**
