@@ -18,16 +18,9 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Pasan
- */
+
+
 public class Guest extends javax.swing.JFrame {
 
     //Define the table and timer

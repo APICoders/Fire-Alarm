@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package firealarm_rmi;
 
-/**
- *
- * @author Pasan
- */
+
 import firealarm_ui.Alert;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,8 +44,6 @@ public class FireAlarmImplement extends UnicastRemoteObject implements FireAlarm
     }
      
     
-
-
     @Override
     public boolean AdminLogin(String email, String password) throws RemoteException {
         
