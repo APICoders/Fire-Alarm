@@ -1,0 +1,30 @@
+=========================instructions to deploy=============================
+
+1.	Go to phpMyAdmin and create a database named firealarmmonitor. Then export the firealarmmonitor.sql file to the created database.
+
+2.	To deploy the API and the web client start Apache tomcat Server and change the HTTP port as 8081. 
+
+3.	Then go to the Admin page with the URL 'http://localhost:8081/' .You will be directed to the Admin Page. 
+
+4.	Then click Manage APP button and login. 
+
+5.	Then you will direct to the Web Application Manager page. 
+
+6.	Then go to 'war file to deploy'. Click choose file , then add the 'FireAlarmMonitor.war' file in the 'Executable war for API' folder placed inside the 'Binaries' folder.  Then click deploy. 
+
+7.	If it is deployed successfully it will be displayed under 'applications deployed'.
+
+8.	 Do the same thing for the 'webclient.war' which is located in the 'Executable war for web client' folder of the Binaries folder.
+
+9.	Open the command line and go to  ‘Fire-Alarm\Binaries\Executable Jar for RMI server,client\RMI Server’.  Then run the RMI server using ‘java -jar "RMIServer.jar"’ . 
+
+10.	Then double click the ‘FireAlarm.jar’ which is located in ‘Fire-Alarm\Binaries\Executable Jar for RMI server,client\Desktop Client’ to open the desktop client.
+
+11.	Then find the ‘Sensor.jar’ file in ‘Fire-Alarm\Binaries\Executable Jar for Sensor’. Then double click it to deploy the sensor app.
+
+12.     Now you can use the Fire Alarm Monitoring system.
+
+	Note – For more clarifications you can refer README files in separate executable Jar folders.
+
+
+
