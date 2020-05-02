@@ -24,6 +24,11 @@
 
 12.     Now you can use the Fire Alarm Monitoring system.
 
+***     Important - The SMS service provided in the API, sends SMS notifications only to the hard corded number in the source code. If you 	want to recieve Alert notifications to your mobile number, you have to change the recievers number in the SmsSender file in the 		com.ds.FireAlarmMonitor.controller package in the 'Fire-Alarm\API\FireAlarmMonitor\src' folder. Then add your number as a verified caller ID through 'https://www.twilio.com/console/phone-numbers/verified'. Then verify your number. Login credentials for the site as follows 
+* email - apicoders.codeArmy@gmail.com
+* Twilio Password - p5@k@a98330000
+
+Also if you want to recieve mails change the reciever email in the 'Fire-Alarm\API\FireAlarmMonitor\src\com\ds\FireAlarmMonitor\controller\MailController'
 	Note – For more clarifications you can refer README files in separate executable Jar folders.
 
 
